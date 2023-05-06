@@ -2,7 +2,7 @@
 
 This is TODO for Android client about TCP/IP server-client architecture
 
-Server side had written by Oguz Karan during course.
+Server side had written by Oguz Karan during course. Server operation is capitalize the given string for client trainning purposes.  
 
 # TODO List in TR
 - MainActivity'de bir connect işlemini yapan button (veya istediğiniz bir görsel) olacaktır.
