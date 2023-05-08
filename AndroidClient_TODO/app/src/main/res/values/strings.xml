@@ -5,4 +5,5 @@
     <string name="edittext_host_hint_text">Input host</string>
     <string name="edittext_text_hint_text">Input text</string>
     <string name="button_connect_text">Connect</string>
+    <string name="button_disconnect_text">Disconnect</string>
 </resources>

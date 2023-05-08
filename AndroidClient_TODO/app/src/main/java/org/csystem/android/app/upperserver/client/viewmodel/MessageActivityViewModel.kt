@@ -9,4 +9,6 @@ class MessageActivityViewModel (val activity: MessageActivity){
 
     fun handleExitButton() = activity.onExitButtonClicked()
 
+    fun handleDisconnectButton() = activity.onDisconnectButtonClicked()
+
 }

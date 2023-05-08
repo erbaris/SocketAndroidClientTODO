@@ -33,11 +33,23 @@ class MessageActivity : AppCompatActivity() {
     private fun doSendReceiveWork(){
         val bw = BufferedWriter(OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))
         val br = BufferedReader(InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))
+        if (mBinding.text.equals("quit")) {
+            bw.write("[" + mBinding.text + "]" + "\r\n")
+            bw.flush()
+        }
+        else {
+            bw.write(mBinding.text + "\r\n")
+            bw.flush()
+        }
+        var result = br.readLine().trim()
 
-        bw.write(mBinding.text + "\r\n")
-        bw.flush()
-        mBinding.result = br.readLine().trim()
+        if(result.equals("[QUIT]"))
+            mBinding.result = "QUIT"
+        else
+            mBinding.result = result
+
     }
+
 
     private fun connect()
     {
@@ -82,6 +94,28 @@ class MessageActivity : AppCompatActivity() {
     }
 
     fun onUpperButtonClicked() = threadPool.execute {upperCallback()}
+
+    private fun quitWork(){
+        val bw = BufferedWriter(OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))
+
+        bw.write("quit" + "\r\n")
+        bw.flush()
+        runOnUiThread { Toast.makeText(this, "It is disconnected...", Toast.LENGTH_SHORT).show()}
+
+    }
+    private fun quitCallback()
+    {
+        try {
+            quitWork()
+        }
+        catch (ex: IOException) {
+            runOnUiThread { Toast.makeText(this, "Problem occurs while send/receive", Toast.LENGTH_LONG).show()}
+        }
+        catch (ex: Throwable) {
+            runOnUiThread { Toast.makeText(this, "RX/TX General problem occurs. Try again later", Toast.LENGTH_SHORT).show()}
+        }
+    }
+    fun onDisconnectButtonClicked() = threadPool.execute {quitCallback()}
 
     private fun initBinding()
     {
